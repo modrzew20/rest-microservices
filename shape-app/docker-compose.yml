@@ -1,0 +1,25 @@
+services:
+  smartcode-db:
+    container_name: smartcode-db
+    image: postgres:14.4
+    env_file:
+      - .env
+    ports:
+      - 2000:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  smartcode-pgadmin:
+    container_name: smartcode-pgadmin
+    image: dpage/pgadmin4:6.12
+    env_file:
+      - .env
+    ports:
+      - 15432:80
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    depends_on:
+      - smartcode-db
+volumes:
+  postgres:
+  pgadmin:

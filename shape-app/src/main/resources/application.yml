@@ -1,0 +1,37 @@
+spring:
+  config:
+    import: 'optional:file:.env[.properties]'
+  datasource:
+    url: 'jdbc:postgresql://localhost:2000/${POSTGRES_DB}'
+    username: '${POSTGRES_USER}'
+    password: '${POSTGRES_PASSWORD}'
+  jpa:
+    properties:
+#      jakarta:
+#        persistence:
+#          schema-generation:
+#            scripts:
+#              create-source: metadata
+#              action: create
+#              create-target: src\main\resources\database\01-schema.sql
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+  sql:
+    init:
+      mode: never
+  liquibase:
+    enabled: true
+    drop-first: true
+    change-log: liquibase-changeLog.xml
+server:
+  servlet:
+    context-path: /api/v1
+  error:
+    include-message: always
+    include-exception: true
+    include-stacktrace: always
